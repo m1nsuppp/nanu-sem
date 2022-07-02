@@ -5,7 +5,7 @@ const express = require('express');
 const session = require('express-session');
 const { check, validationResult } = require('express-validator');
 const path = require('path');
-const dbConfig = require('./'); 
+const dbConfig = require('./db-config.json'); 
 const app = express();
 const port = 3000;
 const hostname = 'localhost';
@@ -18,11 +18,11 @@ app.use(session({
 }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname + './public')));
+app.use(express.static(path.join(__dirname + '/public')));
 
 // http:localhost:3000/
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname + './public/login.html'));
+  res.sendFile(path.join(__dirname + '/public/login.html'));
 });
 
 app.post('/', (req, res) => {
@@ -71,7 +71,7 @@ app.get('/home', (req, res) => {
 
 // http://localhost:3000/signup
 app.get('/signup', (req, res) => {
-  res.sendFile(path.join(__dirname + '../../../public/signup.html'));
+  res.sendFile(path.join(__dirname + '/public/signup.html'));
 });
 
 // check validation.
@@ -87,9 +87,9 @@ app.post('/signup', [
     let errorMsgs = errors.map(error => error.msg);
 
     if (errorMsgs.length) {
-      // errorMsgs.forEach((errorMsg) => {
-      //   res.send(errorMsg);
-      // });
+      errorMsgs.forEach((errorMsg) => {
+        console.log(errorMsg);
+      });
     }
     // 유효성 검사를 통과하지 못했다면
     // if (!errors.isEmpty()) {
