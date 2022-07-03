@@ -1,4 +1,5 @@
 "use strict";
+
 const { check, validationResult } = require('express-validator');
 
 const showSignup = (req, res) => {

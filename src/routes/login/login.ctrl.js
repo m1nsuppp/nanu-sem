@@ -7,19 +7,7 @@ const showLogin = (req, res) => {
   res.render('login');
 };
 
-const checkLoggedIn = (req, res, err, result) => {
-  if (err) throw err;
-  if (result.length > 0) {
-    req.session.loggedin = true;
-    req.session.username = username;
-    res.redirect('/home');
-  } else {
-    res.send('사용자 이름 또는 비밀번호가 일치하지 않습니다.');
-  }
-  res.end();
-};
-
-const loginSucces = (req, res) => {
+const loginSucces = (req, res, next) => {
   let username = req.body.username;
   let password = req.body.password;
 
@@ -42,7 +30,7 @@ const loginSucces = (req, res) => {
   }
 };
 
-const goToHome = (req, res) => {
+const goToHome = (req, res, next) => {
   if (req.session.loggedin) {
     res.send(`안녕하세요, ${req.session.username}!`);
   } else {
