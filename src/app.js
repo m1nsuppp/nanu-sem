@@ -21,8 +21,5 @@ app.use(express.json()); // 들어오는 http request body가 json일 때도 par
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname + '/public'))); // express static file directory.
 app.use('/', loginRouter, signupRouter);
-// app.use('/', signupRouter);
-// localhost:3000/signup/signup
-// app.use('/signup', signupRouter);
 
 module.exports = app;
