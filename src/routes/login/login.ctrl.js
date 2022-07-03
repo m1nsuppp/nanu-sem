@@ -39,8 +39,13 @@ const goToHome = (req, res, next) => {
   res.end();
 };
 
+const parcticeFetch = (req, res) => {
+  console.log(req.body);
+};
+
 module.exports = {
   showLogin,
   loginSucces,
   goToHome,
+  parcticeFetch,
 };

@@ -11,8 +11,6 @@ function bar() {
   const string = {
     foo: 'skrrrt~',
   }
-  console.log(string.foo);
-  console.log(JSON.stringify(string));
 
   fetch('/', {
     method: 'POST',

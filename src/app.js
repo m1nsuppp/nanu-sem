@@ -25,10 +25,4 @@ app.use('/', loginRouter, signupRouter);
 // localhost:3000/signup/signup
 // app.use('/signup', signupRouter);
 
-// http:localhost:3000/
-app.post('/', (req, res) => {
-  console.log(req.body);
-});
-
-
 module.exports = app;
