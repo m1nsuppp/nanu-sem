@@ -1,7 +1,6 @@
 "use strict";
-const MySQL = require('mysql2');
-const dbConfig = require('./../../db-config.json'); 
-const connection = MySQL.createConnection(dbConfig);
+
+const connection = require('../../models/db/db').connection;
 
 const showLogin = (req, res) => {
   res.render('login');
