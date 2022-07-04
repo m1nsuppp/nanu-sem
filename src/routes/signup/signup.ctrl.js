@@ -1,9 +1,11 @@
 "use strict";
 
 const { check, validationResult } = require('express-validator');
+const connection = require('../../models/db/db').connection;
 
 const showSignup = (req, res) => {
   res.render('signup');
+  res.end();
 };
 
 const inputDataChecks = [
@@ -13,22 +15,25 @@ const inputDataChecks = [
 ];
 
 const errorProcessing = (req, res) => {
+  const sql = `INSERT INTO accounts (username, password, email) values (?);`;
   const errors = validationResult(req).errors;
-  console.log(req.body);
-
   let errorMsgs = errors.map(error => error.msg);
 
-  if (errorMsgs.length) {
+  if (!errorMsgs.length) {
+    let username = req.body.username;
+    let password = req.body.password;
+    let email = req.body.email;
+    let accounts = [username, password, email];
+    
+    connection.query(sql, [accounts], (err, result) => {
+      if (err) throw err;
+      res.send(`Welcome, ${username}!`);
+    });
+  } else {
     errorMsgs.forEach((errorMsg) => {
       console.log(errorMsg);
     });
   }
-  // 유효성 검사를 통과하지 못했다면
-  // if (!errors.isEmpty()) {
-  //   return res.status(422).jsonp(errors.array());
-  // } else {
-  //   res.send({});
-  // }
 };
 
 module.exports = {
