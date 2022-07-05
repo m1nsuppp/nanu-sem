@@ -1,21 +1,31 @@
 "use strict";
 
-function foo () {
-  const loginBtn = document.querySelector('.btn-block');
-  loginBtn.addEventListener('click', bar);
-}
+const inputPassword = document.getElementById('inputPassword');
+inputPassword.addEventListener('keyup', pwCheck);
 
-function bar () {
-  const inputEmail = document.querySelector('#inputEmail');
-  fetch('http://localhost:3000/', {
+
+function pwCheck() {
+  let pw = inputPassword.value.length;
+
+  fetch('http://localhost:3000/login', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      "Access-Control-Origin": "*",
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      email: inputEmail.value,
-    })
+      "pwlen": pw,
+    }),
+  }).then((res) => {
+    return res.json();
+  }).then((res) => {
+      console.log(res.pwlen);
+      if (res.pwlen < 8) {
+        document.getElementById('foo').innerHTML = 'your password must be at least 8 characters.';
+      } else {
+        document.getElementById('foo').innerHTML = 'possible';
+      }
+  }).catch((error) => {
+    console.log(error);
   });
 }
-
-foo();
