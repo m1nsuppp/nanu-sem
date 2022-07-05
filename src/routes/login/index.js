@@ -10,5 +10,4 @@ router.use('/', (req, res, next) => {
 router.get('/login', ctrl.showLogin);
 router.post('/login', ctrl.loginSucces);
 
-
 module.exports = router;
