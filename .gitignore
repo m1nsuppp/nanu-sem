@@ -102,4 +102,4 @@ dist
 
 # TernJS port file
 .tern-port
-src/db-config.json
+src/models/db/db-config.json

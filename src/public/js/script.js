@@ -1,23 +1,20 @@
 "use strict";
 
-function foo() {
-  const h1 = document.querySelector('body > div > h1');
-
-  h1.addEventListener('click', bar);
+function foo () {
+  const loginBtn = document.querySelector('.btn-block');
+  loginBtn.addEventListener('click', bar);
 }
 
-// How to use fetch() API?
-function bar() {
-  const string = {
-    foo: 'skrrrt~',
-  }
-
-  fetch('/', {
+function bar () {
+  const inputEmail = document.querySelector('#inputEmail');
+  fetch('http://localhost:3000/', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     },
-    body: JSON.stringify(string),
+    body: JSON.stringify({
+      email: inputEmail.value,
+    })
   });
 }
 

@@ -3,48 +3,32 @@
 const connection = require('../../models/db/db').connection;
 
 const showLogin = (req, res) => {
-  res.render('login');
+  if (req.session.isLoggedIn) {
+    res.send('이미 로그인 되어있습니다.');
+  } else {
+    res.render('login');
+  }
 };
 
-const loginSucces = (req, res, next) => {
-  let username = req.body.username;
-  let password = req.body.password;
+const loginSucces = (req, res) => {
+  let inputEmail = req.body.inputEmail; // HTML form에서 name이 inputEmail으로 정해진 element의 값.
+  let inputPassword = req.body.inputPassword;
 
-  if (username && password) {
-    const sql = `SELECT * FROM accounts WHERE username = ? AND password = ?`;
-    connection.query(sql, [username, password], (err, result) => {
+  if (inputEmail && inputPassword) {
+    const sql = `SELECT * FROM accounts WHERE email = ? AND password = ?`;
+    connection.query(sql, [inputEmail, inputPassword], (err, result) => {
       if (err) throw err;
       if (result.length > 0) {
-        req.session.loggedin = true;
-        req.session.username = username;
-        res.redirect('/home');
-      } else {
-        res.send('사용자 이름 또는 비밀번호가 일치하지 않습니다.');
+        req.session.isLoggedIn = true;
+        req.session.email = inputEmail;
+        res.redirect('/');
       }
-      res.end();
     });
-  } else {
-    res.send('사용자 이름과 비밀번호를 입력하세요!');
-    res.end();
   }
 };
 
-const goToHome = (req, res, next) => {
-  if (req.session.loggedin) {
-    res.send(`안녕하세요, ${req.session.username}!`);
-  } else {
-    res.send('로그인이 필요합니다.');
-  }
-  res.end();
-};
-
-const parcticeFetch = (req, res) => {
-  console.log(req.body);
-};
 
 module.exports = {
   showLogin,
   loginSucces,
-  goToHome,
-  parcticeFetch,
 };
