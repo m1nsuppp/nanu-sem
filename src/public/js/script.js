@@ -23,7 +23,7 @@ function checkValidation () {
    * 1. email validation check(아래 코드들 참고).
    * 2. username, password, isSamePw(비밀번호가 일치하는지 확인하는 변수)가 모두 AND 조건을 만족할 때만 
    * '동의하고 시작하기'버튼이 활성화 될 수 있게 하기.
-   */
+  */
   const lengthValidator = {
     username: {
       selector: document.querySelector('.validator.username'),
@@ -48,6 +48,7 @@ function checkValidation () {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
+      // "email": email,
       "usernameLength": usernameLength,
       "pwlen": ipw.length,
       "isSamePw": isSamePw,
@@ -55,6 +56,7 @@ function checkValidation () {
   }).then((res) => {
     return res.json();
   }).then((res) => {
+    // isEmailForm(res.email, );
     isValid(res.usernameLength, lengthValidator.username);
     isValid(res.pwlen, lengthValidator.password);
 
