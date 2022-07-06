@@ -13,11 +13,6 @@ const showLogin = (req, res) => {
 const loginSucces = (req, res, next) => {
   let inputEmail = req.body.inputEmail; // HTML form에서 name이 inputEmail으로 정해진 element의 값.
   let inputPassword = req.body.inputPassword;
-  let pwlen = req.body.pwlen;
-
-  if (pwlen) {
-    return res.json({ pwlen: pwlen });
-  }
 
   if (inputEmail && inputPassword) {
     const sql = `SELECT * FROM accounts WHERE email = ? AND password = ?`;
