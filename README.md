@@ -1,2 +1,2 @@
-# signin-and-signup
-Node.js 회원가입 &amp; 로그인 구현
+# 나눗셈
+- 1/N 플랫폼
