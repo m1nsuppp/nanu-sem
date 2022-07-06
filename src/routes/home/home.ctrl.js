@@ -9,7 +9,9 @@ const showHome = (req, res) => {
 };
 
 const foo = (req, res) => {
-  console.log(req.body);
+  res.json({
+    isLoggedIn: req.session.isLoggedIn,
+  });
 };
 
 

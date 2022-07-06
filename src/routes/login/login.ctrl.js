@@ -4,7 +4,7 @@ const connection = require('../../models/db/db').connection;
 
 const showLogin = (req, res) => {
   if (req.session.isLoggedIn) {
-    res.send('이미 로그인 되어있습니다.');
+    
   } else {
     res.render('login');
   }
