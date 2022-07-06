@@ -18,7 +18,7 @@
     <nav class="navbar nav-global nav-global-sign navbar-expand-sm">
         <div class="container d-flex justify-content-center">
             <a class="navbar-brand" href="/">
-                <img class="img-brand" alt="나눗셈" width="132" src="">
+                <img class="img-brand" alt="나눗셈" width="132" src="https://ifh.cc/g/Ng51kp.png">
             </a>
         </div>
     </nav>
@@ -29,10 +29,16 @@
                 <input type="email" class="form-control" id="inputEmail" placeholder="이메일 입력" name="inputEmail" required>
             </div>
             <div class="form-group">
+                <input type="text" class="form-control" id="inputUsername" placeholder="닉네임" name="inputUsername" required>
+                <span class="validator username"></span>
+            </div>
+            <div class="form-group">
                 <input type="password" class="form-control" id="inputPassword" placeholder="비밀번호 입력" name="inputPassword" required>
+                <span class="validator password"></span>
             </div>
             <div class="form-group">
                 <input type="password" class="form-control" id="confirmPassword" placeholder="비밀번호 확인하기" name="confirmPassword" required>
+                <span class="validator confirm"></span>
             </div>
             <button class="btn btn-block btn-primary" data-toggle="modal" data-target=".modal" id="signup">동의하고 시작하기</button>
 
@@ -42,19 +48,7 @@
         </form>
     </div>
 
-    <div class="modal" tabindex="-1">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Modal title</h5>
-                </div>
-                <div class="modal-body">
-                    <p>Modal body text goes here.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    <script src="./js/script.js" defer></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.6.2/bootstrap-slider.js" integrity="sha256-59/apVFrosMLFX2dHZLGvb3nPpu7e0Yx1rsDr1dTRrk=" crossorigin="anonymous"></script>
 </body>
