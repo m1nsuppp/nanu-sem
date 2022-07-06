@@ -19,6 +19,11 @@ function isValid (resDataProp, validator) {
 }
 
 function checkValidation () {
+  /* 현재 기능 외에 구현해야할 것들
+   * 1. email validation check(아래 코드들 참고).
+   * 2. username, password, isSamePw(비밀번호가 일치하는지 확인하는 변수)가 모두 AND 조건을 만족할 때만 
+   * '동의하고 시작하기'버튼이 활성화 될 수 있게 하기.
+   */
   const lengthValidator = {
     username: {
       selector: document.querySelector('.validator.username'),
@@ -52,7 +57,7 @@ function checkValidation () {
   }).then((res) => {
     isValid(res.usernameLength, lengthValidator.username);
     isValid(res.pwlen, lengthValidator.password);
-    
+
     if (cpw) {
       if (isSamePw) {
         document.querySelector('.validator.confirm').innerHTML = `비밀번호가 일치합니다.`;
