@@ -8,7 +8,16 @@ const showHome = (req, res) => {
   }
 };
 
-const foo = (req, res) => {
+const logout = (req, res) => {
+  if (req.session.isLoggedIn) {
+    req.session.isLoggedIn = false;
+    res.redirect('/login');
+  } else {
+    res.redirect('/login');
+  }
+}
+
+const sendResData = (req, res) => {
   res.json({
     isLoggedIn: req.session.isLoggedIn,
   });
@@ -17,5 +26,6 @@ const foo = (req, res) => {
 
 module.exports = {
   showHome,
-  foo,
+  logout,
+  sendResData,
 };
