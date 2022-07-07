@@ -4,7 +4,7 @@ const connection = require('../../models/db/db').connection;
 
 const showLogin = (req, res) => {
   if (req.session.isLoggedIn) {
-    
+    res.redirect('/');
   } else {
     res.render('login');
   }

@@ -13,7 +13,7 @@ router.get('/logout', (req, res) => {
     req.session.isLoggedIn = false;
     res.render('login');
   } else {
-    res.send('로그인이나 하셈 ㅋㅋ');
+    res.redirect('/login');
   }
 });
 router.post('/', ctrl.foo);
