@@ -23,7 +23,6 @@ const sendResData = (req, res) => {
   });
 };
 
-
 module.exports = {
   showHome,
   logout,

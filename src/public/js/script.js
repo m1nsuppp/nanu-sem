@@ -12,8 +12,10 @@ function isValid (resDataProp, validator) {
   if (resDataProp) {
     if ((validator.min <= resDataProp) && (resDataProp <= validator.max)) {
       validator.selector.innerHTML = `유효합니다.`;
+      validator.selector.style.color = `rgba(90 187 83)`
     } else {
       validator.selector.innerHTML = `${validator.min} ~ ${validator.max}자이어야 합니다.`;
+      validator.selector.style.color = `rgba(233 50 35)`;
     }  
   }
 }
@@ -59,12 +61,14 @@ function checkValidation () {
     // isEmailForm(res.email, );
     isValid(res.usernameLength, lengthValidator.username);
     isValid(res.pwlen, lengthValidator.password);
-
+    const validText = document.querySelector('.validator.confirm');
     if (cpw) {
       if (isSamePw) {
-        document.querySelector('.validator.confirm').innerHTML = `비밀번호가 일치합니다.`;
+        validText.innerHTML = `비밀번호가 일치합니다.`;
+        validText.style.color = `rgba(90 187 83)`;
       } else {
-        document.querySelector('.validator.confirm').innerHTML = `비밀번호가 일치하지 않습니다.`;
+        validText.innerHTML = `비밀번호가 일치하지 않습니다.`;
+        validText.style.color = `rgba(233 50 35)`;
       }
     }
   }).catch((error) => {
