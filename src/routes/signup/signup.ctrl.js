@@ -15,39 +15,28 @@ const inputDataChecks = [
 ];
 
 const errorProcessing = (req, res) => {
-  const sql = `INSERT INTO accounts (email, username, password) VALUES (?);`;
+  const sql = {
+    hasEmail: (email) => `SELECT * FROM accounts WHERE email = '${email}';`,
+    hasUsername: (username) => `SELECT * FROM accounts WHERE username = '${username}';`,
+    confirmSignup: () => `INSERT INTO accounts (email, username, password) VALUES (?);`,
+  };
   const errors = validationResult(req).errors;
   let errorMsgs = errors.map(error => error.msg);
-  let usernameLength = req.body.usernameLength;
-  let pwlen = req.body.pwlen;
-  let isSamePw = req.body.isSamePw;
-
+  let inputEmail = req.body.inputEmail;
+  let inputUsername = req.body.inputUsername;
   let resData = {
-    usernameLength: usernameLength,
-    pwlen: pwlen,
-    isSamePw: isSamePw,
+    hasEmail: false,
+    hasUsername: false,
   };
 
-  res.json(resData);
-
-  if (!errorMsgs.length) {
-    let inputEmail = req.body.inputEmail;
-    let inputUsername = req.body.inputUsername;
-    let inputPassword = req.body.inputPassword;
-    let confirmPassword = req.body.confirmPassword;
-    let accounts = [];
-
-    if (inputPassword === confirmPassword) {
-      accounts = [inputEmail, inputUsername, inputPassword];
-      connection.query(sql, [accounts], (err, result) => {
-        if (err) throw err;
-      });
+  // email 있는지 확인.
+  connection.query(sql.hasEmail(inputEmail), (err, result, fields) => {
+    if (err) throw err;
+    if (result.length) {
+      resData.hasEmail = true;
     }
-  } else {
-    errorMsgs.forEach((errorMsg) => {
-      console.log(errorMsg);
-    });
-  }
+    res.json(resData);
+  });
 };
 
 module.exports = {
