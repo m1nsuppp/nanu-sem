@@ -1,8 +1,48 @@
 "use strict";
+import { inputEmail, inputUsername, inputPassword, confirmPassword, colors } from "./userFields.js";
 
-const inputEmail = document.getElementById('inputEmail');
-inputEmail.addEventListener('keyup', isDuplicated);
+function signup () {
+  const validator = {
+    username: {
+      min: 2,
+      max: 16,
+      selector: document.querySelector('.validator.username'),
+    },
+    password: {
+      min: 8,
+      max: 20,
+      selector: document.querySelector('.validator.password'),
+    },
+    confirmPassword: {
+      selector: document.querySelector('.validator.confirmPassword'),
+    }
+  };
 
+  // 이메일 가입 여부 확인
+  inputEmail.addEventListener('keyup', isDuplicated);
+
+  // 닉네임, 비밀번호 길이 확인
+  inputUsername.addEventListener('keyup', () => {
+    isValidLength(inputUsername.value.length, validator.username, colors);
+  });
+  inputPassword.addEventListener('keyup', () => {
+    isValidLength(inputPassword.value.length, validator.password, colors);
+  });
+
+  confirmPassword.addEventListener('keyup', () => {
+    let isSamePassword = (inputPassword.value === confirmPassword.value);
+
+    if (isSamePassword) {
+      validator.confirmPassword.selector.innerHTML = '일치합니다.';
+      validator.confirmPassword.selector.style.color = colors.correct;
+    } else {
+      validator.confirmPassword.selector.innerHTML = '일치하지 않습니다.';
+      validator.confirmPassword.selector.style.color = colors.incorrect;
+    }
+  });
+}
+
+// 닉네임, 비밀번호 길이 확인
 function isValidLength (resDataProp, validator, colors) {
   if (resDataProp) {
     if ((validator.min <= resDataProp) && (resDataProp <= validator.max)) {
@@ -15,6 +55,7 @@ function isValidLength (resDataProp, validator, colors) {
   }
 }
 
+// 이메일 중복 확인
 function isDuplicated () {
   fetch('http://localhost:3000/signup', {
     method: 'POST',
@@ -32,20 +73,18 @@ function isDuplicated () {
     /**
      * res = { hasEmail: Boolean }
      */
-    
+    let emailValidator = document.querySelector('.validator.email');
     // 가입된 이메일인지 확인.
     if (res.hasEmail) {
-      document.querySelector('.validator.email').innerHTML = `이미 가입한 이메일입니다.`;
+      emailValidator.innerHTML = `이미 가입한 이메일입니다.`;
+      emailValidator.style.color = colors.incorrect;
     } else {
-      document.querySelector('.validator.email').innerHTML = `가입 가능한 이메일입니다.`;      
+      emailValidator.innerHTML = `가입 가능한 이메일입니다.`;
+      emailValidator.style.color = colors.correct;
     }
   }).catch((error) => {
     console.log(error);
   });
 }
 
-// 닉네임, 비밀번호 길이 확인
-
-function isValidLength () {
-  
-}
+signup();
