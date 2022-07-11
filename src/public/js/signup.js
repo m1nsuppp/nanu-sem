@@ -56,35 +56,32 @@ function isValidLength (resDataProp, validator, colors) {
 }
 
 // 이메일 중복 확인
-function isDuplicated () {
-  fetch('http://localhost:3000/signup', {
+async function isDuplicated () {
+  const url = 'http://localhost:3000/signup';
+  let emailValidator = document.querySelector('.validator.email');
+  let email = {
+    inputEmail: inputEmail.value,
+  };
+
+  let response = await fetch(url, {
     method: 'POST',
     headers: {
-      "Access-Control-Origin": "*",
+      'Access-Control-Origin': '*',
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({
-      "inputEmail": inputEmail.value,
-      "inputUsername": inputUsername.value,
-    }),
-  }).then((res) => {
-    return res.json();
-  }).then((res) => {
-    /**
-     * res = { hasEmail: Boolean }
-     */
-    let emailValidator = document.querySelector('.validator.email');
-    // 가입된 이메일인지 확인.
-    if (res.hasEmail) {
-      emailValidator.innerHTML = `이미 가입한 이메일입니다.`;
-      emailValidator.style.color = colors.incorrect;
-    } else {
-      emailValidator.innerHTML = `가입 가능한 이메일입니다.`;
-      emailValidator.style.color = colors.correct;
-    }
-  }).catch((error) => {
-    console.log(error);
-  });
+    body: JSON.stringify(email),
+  })
+  .catch((error) => console.log(error));
+
+  let result = await response.json().catch((error) => console.log(error));
+  
+  if (result.hasEmail) {
+    emailValidator.innerHTML = `이미 가입한 이메일입니다.`;
+    emailValidator.style.color = colors.incorrect;
+  } else {
+    emailValidator.innerHTML = `가입 가능한 이메일입니다.`;
+    emailValidator.style.color = colors.correct;
+  }
 }
 
 signup();
