@@ -10,7 +10,7 @@ router.use('/signup', (req, res, next) => {
 router.get('/signup', ctrl.showSignup);
 router.post('/signup',
   ctrl.inputDataChecks,
-  ctrl.errorProcessing
+  ctrl.errorProcessing,
 );
 
 module.exports = router;
