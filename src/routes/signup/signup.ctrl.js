@@ -1,7 +1,6 @@
 "use strict";
 
 const { check, validationResult } = require('express-validator');
-const connection = require('../../models/db/db').connection;
 
 const showSignup = (req, res) => {
   res.render('signup');
@@ -14,12 +13,41 @@ const inputDataChecks = [
   check('inputPassword', 'Your password must be at least 8 characters.').not().isEmpty().isLength({ min : 8, max: 20}),
 ];
 
-const errorProcessing = (req, res) => {
-  const sql = {
-    hasEmail: (email) => `SELECT * FROM accounts WHERE email = '${email}';`,
-    hasUsername: (username) => `SELECT * FROM accounts WHERE username = '${username}';`,
-    confirmSignup: () => `INSERT INTO accounts (email, username, password) VALUES (?);`,
-  };
+const isEmailInUse = (email) => {
+  const connection = require('../../models/db/db').connection;
+  const sql = `SELECT * FROM accounts WHERE email = '${email}';`;
+  
+  return new Promise((resolve, reject) => {
+    connection.query(sql, (error, result, fields) => {
+      if (error) reject(new Error('error'));
+
+      if (result.length) {
+        return resolve(true);
+      } else {
+        return resolve(false);
+      }
+    })
+  });
+}
+
+const isUsernameInUse = (username) => {
+  const connection = require('../../models/db/db').connection;
+  const sql = `SELECT * FROM accounts WHERE username = '${username}';`;
+  
+  return new Promise((resolve, reject) => {
+    connection.query(sql, (error, result, fields) => {
+      if (error) reject(new Error('error'));
+      
+      if (result.length) {
+        return resolve(true);
+      } else {
+        return resolve(false);
+      }
+    })
+  });
+}
+
+const errorProcessing = async (req, res, next) => {
   const errors = validationResult(req).errors;
   let errorMsgs = errors.map(error => error.msg);
   let inputEmail = req.body.inputEmail;
@@ -30,13 +58,9 @@ const errorProcessing = (req, res) => {
   };
 
   // email 있는지 확인.
-  connection.query(sql.hasEmail(inputEmail), (err, result, fields) => {
-    if (err) throw err;
-    if (result.length) {
-      resData.hasEmail = true;
-    }
-    res.json(resData);
-  });
+  resData.hasEmail = await isEmailInUse(inputEmail);
+  resData.hasUsername = await isUsernameInUse(inputUsername);
+  res.json(resData);
 };
 
 module.exports = {
