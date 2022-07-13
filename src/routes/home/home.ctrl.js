@@ -10,7 +10,7 @@ const showHome = (req, res) => {
 
 const logout = (req, res) => {
   if (req.session.isLoggedIn) {
-    req.session.isLoggedIn = false;
+    req.session.isLoggedIn = 0;
     res.redirect('/login');
   } else {
     res.redirect('/login');

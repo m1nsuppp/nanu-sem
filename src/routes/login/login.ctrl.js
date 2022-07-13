@@ -19,7 +19,7 @@ const loginSucces = (req, res, next) => {
     connection.query(sql, [inputEmail, inputPassword], (err, result) => {
       if (err) throw err;
       if (result.length > 0) {
-        req.session.isLoggedIn = true;
+        req.session.isLoggedIn = 1;
         req.session.email = inputEmail;
         res.redirect('/');
       } else {
