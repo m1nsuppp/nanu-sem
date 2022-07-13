@@ -1,5 +1,5 @@
 "use strict";
-import { inputEmail, inputUsername, inputPassword, confirmPassword, colors } from "./userFields.js";
+import { inputEmail, inputUsername, inputPassword, confirmPassword, colors, msgs } from "./userFields.js";
 
 function signup () {
   const validator = {
@@ -53,8 +53,8 @@ function isValidLength (resDataProp, validator, colors) {
 
 // 이메일 중복 확인
 async function isReduplicationEmail () {
-  const url = 'http://localhost:3000/signup';
-  let emailValidator = document.querySelector('.validator.email');
+  const url = '/signup';
+  const emailValidator = document.querySelector('.validator.email');
   let key = {
     inputEmail: inputEmail.value,
   };
@@ -70,16 +70,9 @@ async function isReduplicationEmail () {
 
   // result: { hasEmail: Boolean, hasUsername: Boolean }
   let result = await response.json().catch((error) => console.log(error));
-  console.log(result);
-  console.log(typeof result);
 
-  // if (result.hasEmail) {
-  //   emailValidator.innerHTML = `이미 사용중인 이메일입니다.`;
-  // } else if (inputEmail.value === '') {
-  //   emailValidator.innerHTML = `필수 입력 조건입니다.`;
-  // } else {
-  //   emailValidator.innerHTML = `가입 가능한 이메일입니다.`;
-  // }
+  emailValidator.innerHTML = `${msgs[result.hasEmail]} 이메일입니다.`;
+  emailValidator.style.color = colors[result.hasEmail];
 }
 
 async function isReduplicationUsername () {
@@ -101,15 +94,8 @@ async function isReduplicationUsername () {
   // result: { hasEmail: Boolean, hasUsername: Boolean }
   let result = await response.json().catch((error) => console.log(error));
 
-  // if (result.hasUsername) {
-  //   usernameValidator.innerHTML = `이미 등록된 닉네임입니다.`;
-  // } else if (inputUsername.value === '') {
-  //   usernameValidator.innerHTML = `필수 입력 조건입니다.`;
-  // } else if (2 > inputUsername.value.length || inputUsername.value.length > 20) {
-  //   usernameValidator.innerHTML = `2 ~ 16자이어야 합니다.`;
-  // } else if (!result.hasUsername && (2 <= inputUsername.value.length && inputUsername.value.length <= 20)) {
-  //   usernameValidator.innerHTML = `사용 가능한 닉네임입니다.`;
-  // } 
+  usernameValidator.innerHTML = `${msgs[result.hasUsername]} 닉네임입니다.`;
+  usernameValidator.style.color = `${colors[result.hasUsername]}`;
 }
 
 signup();

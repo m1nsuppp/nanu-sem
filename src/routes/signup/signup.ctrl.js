@@ -19,13 +19,12 @@ const isEmailInUse = (email) => {
   
   return new Promise((resolve, reject) => {
     connection.query(sql, (error, result, fields) => {
+      let hasEmail;
       if (error) reject(new Error('error'));
 
-      if (result.length) {
-        return resolve(true);
-      } else {
-        return resolve(false);
-      }
+      hasEmail = result.length ? 1 : 0;
+
+      return resolve(hasEmail);
     })
   });
 }
@@ -36,13 +35,12 @@ const isUsernameInUse = (username) => {
   
   return new Promise((resolve, reject) => {
     connection.query(sql, (error, result, fields) => {
+      let hasUsername;
       if (error) reject(new Error('error'));
       
-      if (result.length) {
-        return resolve(true);
-      } else {
-        return resolve(false);
-      }
+      hasUsername = result.length ? 1 : 0;
+
+      return resolve(hasUsername);
     })
   });
 }
