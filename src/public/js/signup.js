@@ -3,11 +3,6 @@ import { inputEmail, inputUsername, inputPassword, confirmPassword, colors } fro
 
 function signup () {
   const validator = {
-    username: {
-      min: 2,
-      max: 16,
-      selector: document.querySelector('.validator.username'),
-    },
     password: {
       min: 8,
       max: 20,
@@ -18,13 +13,14 @@ function signup () {
     }
   };
 
-  // 이메일 가입 여부 확인
-  inputEmail.addEventListener('keyup', isDuplicated);
+  // 이메일, 닉네임 중복 확인
+  inputEmail.addEventListener('change', isReduplicationEmail);
+  inputUsername.addEventListener('change', isReduplicationUsername);
 
   // 닉네임, 비밀번호 길이 확인
-  inputUsername.addEventListener('keyup', () => {
-    isValidLength(inputUsername.value.length, validator.username, colors);
-  });
+  // inputUsername.addEventListener('keyup', () => {
+  //   isValidLength(inputUsername.value.length, validator.username, colors);
+  // });
   inputPassword.addEventListener('keyup', () => {
     isValidLength(inputPassword.value.length, validator.password, colors);
   });
@@ -56,32 +52,64 @@ function isValidLength (resDataProp, validator, colors) {
 }
 
 // 이메일 중복 확인
-async function isDuplicated () {
+async function isReduplicationEmail () {
   const url = 'http://localhost:3000/signup';
   let emailValidator = document.querySelector('.validator.email');
-  let email = {
+  let key = {
     inputEmail: inputEmail.value,
   };
-
   let response = await fetch(url, {
     method: 'POST',
     headers: {
       'Access-Control-Origin': '*',
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(email),
+    body: JSON.stringify(key),
   })
   .catch((error) => console.log(error));
 
+  // result: { hasEmail: Boolean, hasUsername: Boolean }
   let result = await response.json().catch((error) => console.log(error));
-  
-  if (result.hasEmail) {
-    emailValidator.innerHTML = `이미 가입한 이메일입니다.`;
-    emailValidator.style.color = colors.incorrect;
-  } else {
-    emailValidator.innerHTML = `가입 가능한 이메일입니다.`;
-    emailValidator.style.color = colors.correct;
-  }
+  console.log(result);
+  console.log(typeof result);
+
+  // if (result.hasEmail) {
+  //   emailValidator.innerHTML = `이미 사용중인 이메일입니다.`;
+  // } else if (inputEmail.value === '') {
+  //   emailValidator.innerHTML = `필수 입력 조건입니다.`;
+  // } else {
+  //   emailValidator.innerHTML = `가입 가능한 이메일입니다.`;
+  // }
+}
+
+async function isReduplicationUsername () {
+  const url = '/signup';
+  let usernameValidator = document.querySelector('.validator.username');
+  let key = {
+    inputUsername: inputUsername.value,
+  };
+  let response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Access-Control-Origin': '*',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(key),
+  })
+  .catch((error) => console.log(error));
+
+  // result: { hasEmail: Boolean, hasUsername: Boolean }
+  let result = await response.json().catch((error) => console.log(error));
+
+  // if (result.hasUsername) {
+  //   usernameValidator.innerHTML = `이미 등록된 닉네임입니다.`;
+  // } else if (inputUsername.value === '') {
+  //   usernameValidator.innerHTML = `필수 입력 조건입니다.`;
+  // } else if (2 > inputUsername.value.length || inputUsername.value.length > 20) {
+  //   usernameValidator.innerHTML = `2 ~ 16자이어야 합니다.`;
+  // } else if (!result.hasUsername && (2 <= inputUsername.value.length && inputUsername.value.length <= 20)) {
+  //   usernameValidator.innerHTML = `사용 가능한 닉네임입니다.`;
+  // } 
 }
 
 signup();
