@@ -6,6 +6,7 @@ const memoryStore = require('memorystore')(session);
 const maxAge = 5 * 60 * 1000;
 const path = require('path');
 const app = express();
+
 const homeRouter = require('./routes/home');
 const loginRouter = require('./routes/login');
 const signupRouter = require('./routes/signup');
