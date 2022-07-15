@@ -364,5 +364,7 @@ footer {
     color: #263747; }
     .txt-terms a:hover {
       color: #00C040; }
-
+#error-msg {
+  color: rgba(255 0 0 );
+}
 /*# sourceMappingURL=style.css.map */
