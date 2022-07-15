@@ -1,30 +1,22 @@
 "use strict";
 
-const showHome = (req, res) => {
-  if (req.session.isLoggedIn) {
-    res.render('index');
-  } else { 
-    res.redirect('/login');
-  }
+const showHomePage = (req, res) => {
+  res.render('index');
 };
 
-const logout = (req, res) => {
-  if (req.session.isLoggedIn) {
-    req.session.isLoggedIn = 0;
-    res.redirect('/login');
-  } else {
-    res.redirect('/login');
-  }
-}
-
-const sendResData = (req, res) => {
+const isSignedIn = (req, res) => {
   res.json({
-    isLoggedIn: req.session.isLoggedIn,
+    isSignedIn: req.session.isSignedIn,
   });
 };
 
+const onSignOut = (req, res) => {
+  req.session.destroy(() => req.session);
+  res.redirect('/');
+};
+
 module.exports = {
-  showHome,
-  logout,
-  sendResData,
+  showHomePage,
+  isSignedIn,
+  onSignOut,
 };

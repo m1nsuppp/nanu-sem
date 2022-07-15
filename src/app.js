@@ -8,8 +8,8 @@ const path = require('path');
 const app = express();
 
 const homeRouter = require('./routes/home');
-const loginRouter = require('./routes/login');
-const signupRouter = require('./routes/signup');
+const signInRouter = require('./routes/signin');
+const signUpRouter = require('./routes/signup');
 const createRouter = require('./routes/create');
 
 // app setting
@@ -22,13 +22,11 @@ app.use(session({
   resave: false,
   saveUninitialized: true,
   store: new memoryStore({ checkPeriod: maxAge}),
-  cookie: {
-    maxAge,
-  },
+  cookie: { maxAge, },
 }));
 app.use(express.json()); // 들어오는 http request body가 json일 때도 parsing 가능하게 한다.
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname + '/public'))); // express static file directory.
-app.use('/', homeRouter, loginRouter, signupRouter, createRouter);
+app.use('/', homeRouter, signInRouter, signUpRouter, createRouter);
 
 module.exports = app;
