@@ -1,6 +1,6 @@
 "use strict";
 
-function signInProcess() {
+function onSignIn() {
   const btnPrimary = document.querySelector('.btn-primary');
   const errorMsg = document.querySelector('#error-msg');
   btnPrimary.addEventListener('click', async () => {
@@ -35,4 +35,4 @@ async function hasAccount() {
   return result;
 }
 
-signInProcess();
+onSignIn();
