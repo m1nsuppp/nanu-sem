@@ -14,8 +14,14 @@ const onSignIn = (req, res) => {
 
   connection.query(sql, emailAndPassword, (err, result, fields) => {
     if (err) throw err;
-    responseData.hasAccount = Boolean(result.length);
-    req.session.isSignedIn = Boolean(result.length);
+
+    if (result.length) {
+      responseData.hasAccount = Boolean(result.length);
+      req.session.isSignedIn = Boolean(result.length);
+      req.session.email = req.body.inputEmail;
+      req.session.username = result[0].username;
+    }
+
     res.json(responseData);
   });
 };

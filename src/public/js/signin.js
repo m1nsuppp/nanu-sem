@@ -16,8 +16,8 @@ function onSignIn() {
 
 async function hasAccount() {
   const url = '/signin';
-  let inputEmail = document.querySelector('#inputEmail').value;
-  let inputPassword = document.querySelector('#inputPassword').value;
+  let inputEmail = document.querySelector('#email').value;
+  let inputPassword = document.querySelector('#password').value;
   let response = await fetch(url, {
     method: 'POST',
     headers: {
