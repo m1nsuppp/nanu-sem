@@ -17,7 +17,9 @@ async function isSignedIn() {
   let result = await response.json().catch(error => console.log(error));
   
   loginIcon.innerHTML = signStates[Number(Boolean(result.isSignedIn))];
-  loginIcon.addEventListener('click', () => window.location.href = urls[Number(Boolean(result.isSignedIn))]);
+  loginIcon.addEventListener('click', () => {
+    window.location.href = urls[Number(Boolean(result.isSignedIn))]
+  });
 }
 
 home();
