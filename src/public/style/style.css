@@ -17,11 +17,11 @@ select {
 .btn-primary {
   background-color: #00C040;
   border-color: #00C040; }
-  .btn-primary:hover, .btn-primary:active {
-    background-color: #00C040 !important;
-    border-color: #00C040 !important; }
-  .btn-primary:focus, .btn-primary:active {
-    box-shadow: 0 0 0 0.2rem #FFC13D !important; }
+.btn-primary:disabled {
+  color: #fff;
+  background-color: #98A8B9;
+  border-color: #98A8B9;
+}
 
 .btn-light {
   color: #00C040;
@@ -368,3 +368,4 @@ footer {
   color: rgba(255 0 0 );
 }
 /*# sourceMappingURL=style.css.map */
+

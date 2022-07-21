@@ -1,35 +1,31 @@
 <%- include('includes/head.ejs')%>
-
 <body>
-    <% -include('includes/nav.ejs')%>
+    <%- include('includes/nav.ejs')%>
     <div class="container container-sm container-sign">
-        <form class="form-sign" action="/signup" method="post">
+        <form class="form-sign" onsubmit="return false;">
             <h5 class="form-headline">계정 만들기</h5>
             <div class="form-group">
-                <input type="email" class="form-control" id="inputEmail" placeholder="이메일 입력" name="inputEmail" required>
-                <span class="validator email"></span>
+                <input type="email" class="form-control" id="email" placeholder="이메일 입력">
+                <small class="msg email"></small>
             </div>
             <div class="form-group">
-                <input type="text" class="form-control" id="inputUsername" placeholder="닉네임" name="inputUsername" required>
-                <span class="validator username"></span>
+                <input type="text" class="form-control" id="username" placeholder="닉네임">
+                <small class="msg username"></small>
             </div>
             <div class="form-group">
-                <input type="password" class="form-control" id="inputPassword" placeholder="비밀번호 입력" name="inputPassword" required>
-                <span class="validator password"></span>
+                <input type="password" class="form-control" id="password" placeholder="비밀번호 입력">
+                <small class="msg password"></small>
             </div>
             <div class="form-group">
-                <input type="password" class="form-control" id="confirmPassword" placeholder="비밀번호 확인하기" name="confirmPassword" required>
-                <span class="validator confirmPassword"></span>
+                <input type="password" class="form-control" id="confirm-password" placeholder="비밀번호 확인하기">
+                <small class="msg confirm-password"></small>
             </div>
-            <button class="btn btn-block btn-primary" data-toggle="modal" data-target=".modal" id="signup">동의하고 시작하기</button>
-
-            <a href="" class="btn btn-block btn-light">로그인</a>
-
+            <button class="btn btn-block btn-primary" id="signup" disabled="true">동의하고 시작하기</button>
             <h6 class="txt-terms"><a href="#">이용약관</a> 및 <a href="#">개인정보</a>취급방침</h6>
         </form>
     </div>
 
-    <script type="module" src="./js/signup.js" defer></script>
+    <script src="./js/signup.js" defer></script>
     <%- include('includes/scripts.ejs')%>
 </body>
 
