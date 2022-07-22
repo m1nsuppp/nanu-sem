@@ -6,7 +6,7 @@ const showHomePage = (req, res) => {
 
 const isSignedIn = (req, res) => {
   res.json({
-    isSignedIn: req.session.isSignedIn,
+    isSignedIn: req.session.isSignedIn === true,
     email: req.session.email,
     username: req.session.username,
   });
