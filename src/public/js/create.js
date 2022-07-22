@@ -35,20 +35,20 @@ async function sendData() {
     price: productsPrice.value,
     content: productsDescription.value,
   };
-  const missedInfo = [];
+  let missedInfo = [];
 
   for (const info in productsInfo) {
     if (isEmpty(productsInfo[info])) {
       missedInfo.push(toKorean(info));
     }
   }
-  const warningMessage = missedInfo.join(', ');
 
+  missedInfo = missedInfo.join(', ');
   const isEmptyProductsInfo = Object.values(productsInfo).map(info => isEmpty(info));
   const isConfirmUpload = !isEmptyProductsInfo.includes(true);
 
   if (!isConfirmUpload) {
-    Swal.fire(`입력하지 않은 정보가 있어요(${warningMessage}). `);
+    Swal.fire(`입력하지 않은 정보가 있어요(${missedInfo}). `);
   } else {
     let response = await fetch(URL, {
       method: 'POST',
@@ -58,6 +58,9 @@ async function sendData() {
       body: JSON.stringify(productsInfo),
     })
     .catch(error => console.log(error));
+    
+    let result = await response.json().catch(error => console.log(error));
+    result.success ? window.location.href = '/' : Swal.fire('입력하지 않은 정보가 있어요');
   }
 }
 
