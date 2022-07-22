@@ -3,8 +3,8 @@
 function onSignIn() {
   const btnPrimary = document.querySelector('.btn-primary');
   const errorMsg = document.querySelector('#error-msg');
-  btnPrimary.addEventListener('click', async () => {
-    let result = await hasAccount().catch(error => console.log(error));
+  btnPrimary.addEventListener('click', async (result) => {
+    result = await hasAccount().catch(error => console.log(error));
 
     if (result.hasAccount) {
       window.location.href = '/';
