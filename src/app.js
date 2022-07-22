@@ -18,7 +18,7 @@ app.set('views', views);
 app.set('view engine', 'ejs');
 
 app.use(session({
-  secret: 'qwer1234',
+  secret: 'secret',
   resave: false,
   saveUninitialized: true,
   store: new memoryStore({ checkPeriod: maxAge}),
