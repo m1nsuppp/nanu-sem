@@ -6,18 +6,18 @@
                 <i class="material-icons ic-filter">arrow_back_ios</i>뒤로
             </a>
         </div>
+        <button class="btn btn-primary btn-submit pull-right">상품 등록하기</button>
     </nav>
 
     <div class="container container-sm container-item-create">
         <h5 class="container-headline">같이 나눠요💚</h5>
-
         <form class="form-item-create">
             <div class="form-group form-picture">
                 <div class="file-box">
-                    <input class="upload-name" value="파일선택" disabled="disabled">
+                    <!-- <input class="upload-name" value="파일선택" disabled="disabled"> -->
 
-                    <label for="ex_filename" class="btn btn-secondary">업로드</label>
-                    <input type="file" id="ex_filename" class="upload-hidden">
+                    <!-- <label for="ex_filename" class="btn btn-secondary">업로드</label> -->
+                    <!-- <input type="file" id="ex_filename" class="upload-hidden"> -->
                 </div>
             </div>
 
@@ -34,16 +34,22 @@
                 </select>
             </div>
             <div class="form-group form-price">
-                <input type="number" class="form-control" id="productsPrice" min="0" step="1000" placeholder="가격을 입력해주세요. (￦)">
+                <div class="input-group mb-2 mr-sm-2">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">₩</div>
+                    </div>
+                    <input type="number" class="form-control" id="productsPrice" min="0" placeholder="가격을 입력해주세요.">
+                </div>
             </div>
             <div class="form-group form-description">
                 <textarea class="form-control" id="productsDescription" rows="10" placeholder="제품 설명을 작성해주세요."></textarea>
             </div>
-            <button class="btn btn-primary btn-submit">상품 등록하기</button>
         </form>
     </div>
     <%- include('includes/footer.ejs')%>
 
+    <script src="./js/create.js" defer></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <%- include('includes/scripts.ejs')%>
 </body>
 </html>
