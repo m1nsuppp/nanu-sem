@@ -41,18 +41,18 @@ async function isSomethingInUse(field) {
   const red = 'rgba(255 0 0)';
   const green = 'rgba(0 192 0)';
   const colors = [green, red];
-  const foo = {
+  const msgs = {
     email: ['사용 가능한 이메일입니다.', '이미 등록된 이메일입니다.', '형식에 맞지 않는 이메일입니다.'],
     username: ['사용 가능한 닉네임입니다.', '이미 등록된 닉네임입니다.', '닉네임은 2~16자이어야만 합니다.'],
   };
-  const url = `signup/${field}`;
+  const URL = `signup/${field}`;
   const inputData = document.querySelector(`#${field}`).value;
   const requestBody = {
     inputData: inputData,
   };
   const msgField = document.querySelector(`.msg.${field}`);
 
-  let response = await fetch(url, {
+  let response = await fetch(URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -63,7 +63,7 @@ async function isSomethingInUse(field) {
 
   let result = await response.json().catch(error => console.log(error));
 
-  msgField.innerHTML = foo[field][result.hasData];
+  msgField.innerHTML = msgs[field][result.hasData];
   msgField.style.color = colors[Number(Boolean(result.hasData))];
 
   return result.hasData;
@@ -106,20 +106,20 @@ function isValidAccount(responseData) {
 }
 
 async function createUserWithEmailAndPassword(email, username, password) {
-  const url = '/signup';
+  const URL = '/signup';
   
-  let responseData = {
+  let userAccountInfo = {
     email: email,
     username: username,
     password: password,
   };
   
-  let response = await fetch(url, {
+  let response = await fetch(URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(responseData),
+    body: JSON.stringify(userAccountInfo),
   })
   .catch(error => console.log(error));
 
